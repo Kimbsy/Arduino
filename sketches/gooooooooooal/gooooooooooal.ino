@@ -1,4 +1,4 @@
-// sketch to read values from a Photodiode
+// sketch to read values from a Photodiode HI DAVE
 
 int Photo_diode_Value = 0;
 
