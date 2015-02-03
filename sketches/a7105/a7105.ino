@@ -32,14 +32,26 @@ void A7105_WriteReg(u8 address, u8 data)
 }
 
 
-void A7105_Setup() {
+void A7105_Setup()
+{
   pinMode(CS_PIN, OUTPUT);
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
 //  SPI.setClockDivider(10);
   SPI.setBitOrder(MSBFIRST);
   // set gpio1 to SDO (MISO) by writing to reg GIO1S
-//  A7105_WriteReg(0x0b,0x06); // 0b0110
+  A7105_WriteReg(0x0b,0x19); // 0b011001
+}
+
+void A7105_ReadChipID(uint8_t chipID[])
+{
+  CS_LO();
+  SPI.transfer(0x46); // 0x40 | 0x06
+  for (int i = 0; i < 4; i++)
+  {
+    chipID[i] = SPI.transfer(0);
+  }
+  CS_HI();
 }
 
 u8 A7105_ReadReg(u8 address)

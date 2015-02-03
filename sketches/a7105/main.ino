@@ -9,7 +9,7 @@ void loop() {
   while (1) {
 //check if data is being sent through com port
     if (Serial.available()>4) {
-      Serial.println("good");
+//      Serial.println("good");
       if (Serial.read()!=23) {
         throttle = rudder =aileron = elevator = 0;
       } else {
@@ -20,6 +20,15 @@ void loop() {
       }
     }
     
+//      Serial.println("wooo");
+////      check for chipid
+//      uint8_t chipID[4];
+//      A7105_ReadChipID(chipID);
+//      for (int i = 0; i < 4; i++)
+//      {
+//        Serial.println(chipID[i]);
+//      }
+//    
       //if (state!=0 && state!=1 & state!=128) 
 //Serial.print("State: ");
 //Serial.println(state);
