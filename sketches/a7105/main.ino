@@ -1,34 +1,25 @@
 void loop() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   A7105_Setup(); //A7105_Reset();
-  int startTime, waitTime, hubsanWait,finishTime;
+  int startTime, waitTime, hubsanWait, finishTime;
 //  Serial.println("Preinit");
   initialize();
 
   startTime = micros();
   while (1) {
-//check if data is being sent through com port
+//    check if data is being sent through com port
     if (Serial.available()>4) {
 //      Serial.println("good");
       if (Serial.read()!=23) {
-        throttle = rudder =aileron = elevator = 0;
+        throttle = rudder = aileron = elevator = 0;
       } else {
-      throttle=Serial.read();
-      rudder=Serial.read();
-      aileron=Serial.read();
-      elevator=Serial.read();
+        throttle=Serial.read();
+        rudder=Serial.read();
+        aileron=Serial.read();
+        elevator=Serial.read();
       }
     }
-    
-//      Serial.println("wooo");
-////      check for chipid
-//      uint8_t chipID[4];
-//      A7105_ReadChipID(chipID);
-//      for (int i = 0; i < 4; i++)
-//      {
-//        Serial.println(chipID[i]);
-//      }
-//    
+
       //if (state!=0 && state!=1 & state!=128) 
 //Serial.print("State: ");
 //Serial.println(state);

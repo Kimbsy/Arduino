@@ -33,7 +33,7 @@ void A7105_WriteReg(u8 address, u8 data)
 
 
 void A7105_Setup()
-{
+{  
   pinMode(CS_PIN, OUTPUT);
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
