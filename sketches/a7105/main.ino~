@@ -11,10 +11,9 @@ void loop() {
     if (Serial.available()>4) {
 //      Serial.println("good");
       if (Serial.read()!=23) {
-        throttle = rudder = aileron = elevator = 0;
+        throttle = rudder = aileron = elevator = 255;
       } else {
         throttle=Serial.read();
-//        Serial.println(throttle);
         rudder=Serial.read();
         aileron=Serial.read();
         elevator=Serial.read();
