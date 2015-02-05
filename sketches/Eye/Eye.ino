@@ -1,16 +1,80 @@
+/**
+ * CERBERUS eye
+ * 
+ * Usage:
+ *   # stop the dween from resetting imediately after the serial port is closed
+ *   stty -F /dev/ttyUSB0 -hupcl
+ *   # send a 'y' or 'n' character to the dween
+ *   echo "y" > /dev/ttyUSB0
+ *   echo "n" > /dev/ttyUSB0
+ */
+
+// set up pin contstants
+#define ORANGE 5
+#define BLUE 6
+#define EYE 3
+
+// led HI-LO functions
+#define O_HI() digitalWrite(ORANGE, HIGH);
+#define O_LO() digitalWrite(ORANGE, LOW);
+#define B_HI() digitalWrite(BLUE, HIGH);
+#define B_LO() digitalWrite(BLUE, LOW);
+#define E_HI() digitalWrite(EYE, HIGH);
+#define E_LO() digitalWrite(EYE, LOW);
+
+boolean active = false;
+
 void setup() {
-  // put your setup code here, to run once:
- 
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
+  // set pin modes
+  pinMode(ORANGE, OUTPUT);
+  pinMode(BLUE, OUTPUT);
+  pinMode(EYE, OUTPUT);
+  
+  Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  digitalWrite(5, HIGH);
-  digitalWrite(6, LOW);
-  delay(500);
-  digitalWrite(5, LOW);
-  digitalWrite(6, HIGH);
-  delay(500);
+  
+  // check if Serial has a new byte in the buffer (otherwise returns -1)
+  if (Serial.available() > 0) {
+    // read new byte
+    int input = Serial.read();
+    
+    switch (input) {
+      // if is character 'y', start the things
+      case 'y':
+        Serial.println("go go go");
+        active = true;
+        break;
+       // if is character 'n', stop the things
+      case 'n':
+        Serial.println("aaaaaand stop");
+        active = false;
+        break;
+      // default do nothing
+      default:
+        break;
+    }
+  }
+    
+  if (active) {
+    // turn on eye
+    E_HI();
+    
+    // blink lights
+    O_HI();
+    B_LO()
+    delay(500);
+    O_LO();
+    B_HI();
+    delay(500);
+  }
+  else {
+    // turn off eye
+    E_LO();
+    
+    // turn off lights
+    O_LO();
+    B_LO();
+  }
 }
