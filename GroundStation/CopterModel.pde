@@ -31,7 +31,8 @@ class CopterModel {
         (byte)map(elevator, -1, 1, 0, 255)
         };
         port.write(data);
-        println((byte)map(throttle, 0, 1, 0, 255));
+        println(throttle + ", " + rudder + ", " + aileron + ", " + elevator);
+//        println((byte)map(throttle, 0, 1, 0, 255) + ", " + (byte)map(rudder, 0, 1, 0, 255) + ", " + (byte)map(aileron, 1, -1, 0, 255) + ", " + (byte)map(elevator, -1, 1, 0, 255));
     } 
     else {
       port = initSerial();

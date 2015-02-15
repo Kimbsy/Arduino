@@ -38,7 +38,7 @@ void setup() {
   // new vTracker objects to track several instances
   vTrackers = new VTracker[2];
   // first tracker to track white areas with a tolerance of 15
-  vTrackers[0] = new VTracker(video, 1, 0x007401, 0.24, 0.75); 
+  vTrackers[0] = new VTracker(video, 1, 0x66FFFF, 0.24, 0.75); 
   vTrackers[1] = new VTracker(video, 1, 0xee3a64, 0.24, 0.75);   // another tracker to track bright red areas with a tolerance of 10
   //vTrackers[1] = new VTracker(1,0xff0000,10,0.3);
   // attach independent cursors to the trackers
@@ -194,17 +194,21 @@ void keyPressed() {
 
   if (key == CODED) {
     if (keyCode == UP) {
+//      println("up");
       copter.elevator+=stepSize;
     } 
     else if (keyCode == DOWN) {
+//      println("down");
       copter.elevator-=stepSize;
     } else    if (keyCode == RIGHT) {
+//      println("right");
       copter.aileron+=stepSize;
     } 
     else if (keyCode == LEFT) {
+//      println("left");
       copter.aileron-=stepSize;
     }  }
-  println("Tolerance: " + vTrackers[0].tolerance);
-  println("Showing Video: " + showVideo+copter.throttle);
-  println("Invariance Filter: " + vTrackers[0].getFilter());
+//  println("Tolerance: " + vTrackers[0].tolerance);
+//  println("Showing Video: " + showVideo+copter.throttle);
+//  println("Invariance Filter: " + vTrackers[0].getFilter());
 }
