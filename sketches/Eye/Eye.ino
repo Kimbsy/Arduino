@@ -43,12 +43,10 @@ void loop() {
     switch (input) {
       // if is character 'y', start the things
       case 'y':
-        Serial.println("go go go");
         active = true;
         break;
        // if is character 'n', stop the things
       case 'n':
-        Serial.println("aaaaaand stop");
         active = false;
         break;
       // default do nothing
