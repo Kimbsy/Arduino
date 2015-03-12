@@ -9,7 +9,7 @@
  *   echo "n" > /dev/ttyUSB0
  */
 
-// set up pin contstants
+// set up pin constants
 #define ORANGE 5
 #define BLUE 6
 #define EYE 3
