@@ -1,16 +1,15 @@
 /**
  * Controller for Sojourner RC rover.
  * 
- * Pases on instructions from 6ch receiver
- * to servo motors.
+ * Pases on instructions from 6ch receiver (rx) to servo motors.
  * 
- * Also can be run in 'roving' mode.
+ * Turn off transmitter (tx) to run in 'roving' mode.
  *
  * Pins 2 & 3 are servo signal outputs.
- * Pins 4 & 5 are receiver signal input.
+ * Pins 4 & 5 are rx signal input.
  * 
- * 5V goes to Vcc on receiver and both servos.
- * Gnd goes to Gnd on receiver and both servos.
+ * 5V goes to Vcc on rx and both servos.
+ * Gnd goes to Gnd on rx and both servos.
  */
  
 #include <Servo.h> 
