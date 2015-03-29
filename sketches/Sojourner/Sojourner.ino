@@ -66,7 +66,7 @@ void setup() {
  */
 void loop() {
   
-  // check if tx is on (3rd param is pulseIn timeout)
+  // check if tx is on (3rd param is timeout)
   unsigned long ch2 = pulseIn(L_INPUT, INPUT, 50000);
   unsigned long ch6 = pulseIn(R_INPUT, INPUT, 50000);
   
