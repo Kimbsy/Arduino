@@ -9,14 +9,20 @@ NC='\033[0m'
 while sleep 1; do
   if wmctrl -l | grep -q 'says...'; then
     printf "${RED}IM${NC}\n"
-    echo 'rbh' > /dev/ttyUSB0
+    if [ "$*" != "noled" ]; then
+      echo 'rbh' > /dev/ttyUSB0
+    fi
   else
     if wmctrl -l | grep -q 'Inbox ('; then
       printf "${YEL}email${NC}\n"
-      echo 'ybf' > /dev/ttyUSB0
+      if [ "$*" != "noled" ]; then
+        echo 'ybf' > /dev/ttyUSB0
+      fi
     else
       printf "${GRE}all systems nominal${NC}\n"
-      echo 'gfh' > /dev/ttyUSB0
+      if [ "$*" != "noled" ]; then
+        echo 'gfh' > /dev/ttyUSB0
+      fi
     fi
   fi
 done
