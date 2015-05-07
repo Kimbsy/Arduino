@@ -7,21 +7,28 @@ YEL='\033[0;33m'
 NC='\033[0m'
 
 while sleep 1; do
-  if wmctrl -l | grep -q 'says...'; then
-    printf "${RED}IM${NC}\n"
+  if wmctrl -l | grep -q "[*].*Simitive"; then
+    printf "${RED}Slack-IM${NC}\n"
     if [ "$*" != "noled" ]; then
-      echo 'rbh' > /dev/ttyUSB0
+      echo 'rygd100fhbd100rygd100fhbd100rygd100fhbd100rygd100fhbd100rygd100fhbd100' > /dev/ttyUSB0
     fi
   else
-    if wmctrl -l | grep -q 'Inbox ('; then
-      printf "${YEL}email${NC}\n"
+    if wmctrl -l | grep -q 'says...'; then
+      printf "${RED}IM${NC}\n"
       if [ "$*" != "noled" ]; then
-        echo 'ybf' > /dev/ttyUSB0
+        echo 'rbh' > /dev/ttyUSB0
       fi
     else
-      printf "${GRE}all systems nominal${NC}\n"
-      if [ "$*" != "noled" ]; then
-        echo 'gfh' > /dev/ttyUSB0
+      if wmctrl -l | grep -q 'Inbox ('; then
+        printf "${YEL}email${NC}\n"
+        if [ "$*" != "noled" ]; then
+          echo 'ybf' > /dev/ttyUSB0
+        fi
+      else
+        printf "${GRE}all systems nominal${NC}\n"
+        if [ "$*" != "noled" ]; then
+          echo 'gfh' > /dev/ttyUSB0
+        fi
       fi
     fi
   fi
