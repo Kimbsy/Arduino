@@ -7,7 +7,7 @@ YEL='\033[0;33m'
 NC='\033[0m'
 
 while sleep 1; do
-  if wmctrl -l | grep -q "[*].*Simitive" || wmctrl -l | grep -q "[!].*"; then
+  if wmctrl -l | grep -q "[*].*Simitive" || wmctrl -l | grep -q "[!].*Simiitve"; then
     printf "${RED}Slack-IM${NC}\n"
     if [ "$*" != "noled" ]; then
       echo 'rbh' > /dev/ttyUSB0
