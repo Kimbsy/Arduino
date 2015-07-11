@@ -125,4 +125,3 @@ void setBounds(unsigned long input1, unsigned long input2)
     rMin = input2;
   }
 }
-
