@@ -83,8 +83,8 @@ void getRxInput()
   // figure out min and max values for input
   setBounds(ch3, ch4);
 
-  // map inputs to servo usable outputs
-  eNew = map(ch3, eMin, eMax, 0, 180);
+  // map inputs to servo usable outputs (elevation is inverted)
+  eNew = 180 - map(ch3, eMin, eMax, 0, 180);
   rNew = map(ch4, rMin, rMax, 0, 180);
 
   // only update position if it's far enogh away from the old position
