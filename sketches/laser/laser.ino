@@ -53,8 +53,6 @@ void setup() {
   // initialise servo objects
   rotate.attach(6);
   elevate.attach(7);
-
-  Serial.begin(9600);
 }
 
 void loop() {
@@ -67,8 +65,6 @@ void loop() {
   
   // get values from receiver
   getRxInput();
-
-  Serial.println(ch3);
 
   // write positions to servos
   rotate.write(rPos);
