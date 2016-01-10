@@ -19,16 +19,30 @@ void setup()
 
 void loop()
 {
+  bool fucked = false;
+
+  // Get new values.
   sigVals[0] = pulseIn(2, INPUT, 50000);
   sigVals[1] = pulseIn(3, INPUT, 50000);
   sigVals[2] = pulseIn(4, INPUT, 50000);
   sigVals[3] = pulseIn(5, INPUT, 50000);
   sigVals[4] = pulseIn(6, INPUT, 50000);
   sigVals[5] = pulseIn(7, INPUT, 50000);
-  
+
+  // Output.
   for (int i = 0; i < 6; i++) {
-    Serial.print(sigVals[i]);
-    Serial.print(",");
+    if (sigVals[i] == 0) {
+      fucked = true;
+    }
+
+    if (!fucked) {
+      Serial.print(sigVals[i]);
+      if (i != 5) {
+        Serial.print(",");
+      }
+    }
   }
-  Serial.print("\n");
+  if (!fucked) {
+    Serial.print("\n");
+  }
 }
