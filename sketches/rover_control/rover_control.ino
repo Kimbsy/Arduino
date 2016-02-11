@@ -27,6 +27,8 @@ void setup()
 
   pinMode(PIN_LEFT, OUTPUT);
   pinMode(PIN_RIGHT, OUTPUT);
+  pinMode(PIN_FORWARD, OUTPUT);
+  pinMode(PIN_REVERSE, OUTPUT);
 
   Serial.begin(9600);
 }
@@ -59,6 +61,7 @@ void loop()
     max_drive = drive;
   }
 
+  // Normalize received values.
   int normalized_steer = map(steer, min_steer, max_steer, 0, 255);
   int normalized_drive = map(drive, min_drive, max_drive, 0, 255);
 
@@ -94,7 +97,6 @@ void loop()
 
   // Allow min/max values to be reset from serial console.
   if (Serial.available() > 0) {
-    // read incoming serial data:
     char inChar = Serial.read();
     if (inChar == (int) 'r') {
         min_steer = 99999;
