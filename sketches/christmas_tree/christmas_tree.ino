@@ -5,9 +5,9 @@
 #define RED Adafruit_NeoPixel::Color(255, 0, 0)
 #define GREEN Adafruit_NeoPixel::Color(0, 255, 0)
 #define BLUE Adafruit_NeoPixel::Color(0, 0, 255)
-#define ORANGE Adafruit_NeoPixel::Color(50, 255, 0)
-#define PINK Adafruit_NeoPixel::Color(50, 0, 255)
-#define TEAL Adafruit_NeoPixel::Color(0, 255, 255)
+#define ORANGE Adafruit_NeoPixel::Color(150, 255, 0)
+#define PINK Adafruit_NeoPixel::Color(200, 0, 255)
+#define TEAL Adafruit_NeoPixel::Color(0, 255, 50)
 #define BLACK Adafruit_NeoPixel::Color(0, 0, 0)
 
 // Parameter 1 = number of pixels in strip
@@ -26,6 +26,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(num_pixels, DATA_PIN, NEO_GRB + NEO_
 void setup() {
   strip.begin();
   strip.show();
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -33,15 +34,16 @@ void loop() {
   multi_flash(RED, 4);
   multi_flash(GREEN, 4);
   multi_flash(RED, 4);
-  multi_flash(GREEN, 4);
-  multi_flash(RED, 4);
-  multi_flash(GREEN, 4);
-  multi_flash(RED, 4);
 
-  color_wipe(RED, 30);
-  color_wipe(GREEN, 30);
-  color_wipe(RED, 30);
-  color_wipe(GREEN, 30);
+  fade(RED, GREEN, 10);
+  delay(1000);
+  fade(GREEN, RED, 10);
+  delay(1000);
+  fade(RED, GREEN, 10);
+  delay(1000);
+  fade(GREEN, RED, 10);
+  delay(1000);
+
   color_wipe(RED, 30);
   color_wipe(GREEN, 30);
   color_wipe(RED, 30);
@@ -57,7 +59,7 @@ void loop() {
   double_shuttle(GREEN, RED, 20);
   double_shuttle(GREEN, RED, 20);
 
-  stack(GREEN, RED, 5);
+  stack(GREEN, RED, 20);
 }
 
 void set_color(uint32_t c) {
@@ -96,7 +98,7 @@ void flash_all(int count) {
 }
 
 void color_wipe(uint32_t c, uint8_t wait) {
-  for (uint16_t i = 0; i < strip.numPixels(); i++) {
+  for (int i = 0; i < num_pixels; i++) {
     strip.setPixelColor(i, c);
     strip.show();
     delay(wait);
@@ -106,7 +108,7 @@ void color_wipe(uint32_t c, uint8_t wait) {
 void shuttle(uint32_t background, uint32_t shuttle, uint8_t wait) {
   set_color(background);
 
-  for (uint16_t i = 0; i < num_pixels; i++) {
+  for (int i = 0; i < num_pixels; i++) {
     strip.setPixelColor(i, shuttle);
     strip.setPixelColor(i - 1 % num_pixels, background);
 
@@ -118,7 +120,7 @@ void shuttle(uint32_t background, uint32_t shuttle, uint8_t wait) {
 void double_shuttle(uint32_t background, uint32_t shuttle, uint8_t wait) {
   set_color(background);
 
-  for (uint16_t i = 0; i < num_pixels; i++) {
+  for (int i = 0; i < num_pixels; i++) {
     strip.setPixelColor(i, shuttle);
     strip.setPixelColor(i - 1 % num_pixels, background);
 
@@ -137,10 +139,42 @@ void stack(uint32_t background, uint32_t stack, uint8_t wait) {
 
     for (int j = num_pixels; j > i; j--) {
       strip.setPixelColor(j, stack);
+      strip.setPixelColor((j - 1), stack);
+      strip.setPixelColor((j - 2), stack);
       set_section_color(j + 1, num_pixels, background);
 
       strip.show();
       delay(wait);
     }
   }
+}
+
+void fade(uint32_t from, uint32_t to, uint8_t wait) {
+  float from_r = (float) (uint8_t) (from >> 16),
+      from_g = (float) (uint8_t) (from >> 8),
+      from_b = (float) (uint8_t) from;
+
+  float to_r = (float) (uint8_t) (to >> 16),
+      to_g = (float) (uint8_t) (to >> 8),
+      to_b = (float) (uint8_t) to;
+
+  float steps = 100;
+
+  float delta_r = get_fade_delta(from_r, to_r, steps),
+      delta_g = get_fade_delta(from_g, to_g, steps),
+      delta_b = get_fade_delta(from_b, to_b, steps);
+
+  for (int i = 0; i < steps; i++) {
+    from_r = from_r + delta_r;
+    from_g = from_g + delta_g;
+    from_b = from_b + delta_b;
+
+    uint32_t c = Adafruit_NeoPixel::Color((uint8_t) from_r, (uint8_t) from_g, (uint8_t) from_b);
+    set_color(c);
+    delay(wait);
+  }
+}
+
+float get_fade_delta(float from, float to, float steps) {
+  return (float) ((to - from) / steps);
 }
