@@ -35,13 +35,13 @@ void loop() {
   multi_flash(GREEN, 4);
   multi_flash(RED, 4);
 
-  fade(RED, GREEN, 10);
-  delay(1000);
   fade(GREEN, RED, 10);
   delay(1000);
   fade(RED, GREEN, 10);
   delay(1000);
   fade(GREEN, RED, 10);
+  delay(1000);
+  fade(RED, GREEN, 10);
   delay(1000);
 
   color_wipe(RED, 30);
@@ -76,10 +76,10 @@ void set_section_color(int start, int end, uint32_t c) {
 
 void flash(uint32_t c) {
   set_color(c);
-  delay(100);
+  delay(200 );
 
   set_color(BLACK);
-  delay(100);
+  delay(200 );
 }
 
 void multi_flash(uint32_t c, int count) {
@@ -110,6 +110,8 @@ void shuttle(uint32_t background, uint32_t shuttle, uint8_t wait) {
 
   for (int i = 0; i < num_pixels; i++) {
     strip.setPixelColor(i, shuttle);
+    strip.setPixelColor(i + 1, shuttle);
+    strip.setPixelColor(i + 2, shuttle);
     strip.setPixelColor(i - 1 % num_pixels, background);
 
     strip.show();
@@ -122,9 +124,13 @@ void double_shuttle(uint32_t background, uint32_t shuttle, uint8_t wait) {
 
   for (int i = 0; i < num_pixels; i++) {
     strip.setPixelColor(i, shuttle);
+    strip.setPixelColor(i + 1, shuttle);
+    strip.setPixelColor(i + 2, shuttle);
     strip.setPixelColor(i - 1 % num_pixels, background);
 
     strip.setPixelColor(num_pixels - i, shuttle);
+    strip.setPixelColor(num_pixels - i - 1, shuttle);
+    strip.setPixelColor(num_pixels - i - 2, shuttle);
     strip.setPixelColor(num_pixels - i + 1 % num_pixels, background);
 
     strip.show();
